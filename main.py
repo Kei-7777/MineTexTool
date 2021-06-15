@@ -1,11 +1,23 @@
-import glob                        
-from PIL import Image 
+import glob          
+import os              
+from PIL import Image
+
+def md(path):
+    if not os.path.isdir(path):
+        os.makedirs(path) 
+        print("makedir: " + path)
 
 size = int(input())                                            
                                                                                 
-for name in glob.iglob('**/*.png', recursive=True):                             
+for name in glob.glob('assets/**/*.png', recursive=True):                             
     img = Image.open(name)
     resize = img.resize((size, size), Image.LANCZOS)
-    out = size + "/" + name
+    out = "out\\" + str(size) + "\\" + name
+    pathlist = out.split('\\')
+    del pathlist[-1]
+    mdpath = ""
+    for st in pathlist:
+        mdpath = mdpath + st + "\\"
+    md(mdpath)
     resize.save(out)
-    print(name)
+    print("resize " + str(size) + "x" + str(size) + " : " + name)
