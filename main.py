@@ -37,6 +37,7 @@ for name in glob.glob('assets/**/*.png', recursive=True):
             height = 1
         if width < 1:
             width = 1
+        # 段階的にResize
         resize = cv2.resize(img , (width, height))
         out = "out\\" + str(size) + "\\" + name
         pathlist = out.split('\\')
