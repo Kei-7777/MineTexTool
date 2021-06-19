@@ -1,5 +1,6 @@
 import glob          
-import os              
+import os         
+import shutil as ut     
 import numpy as np
 from PIL import Image
 
@@ -10,7 +11,7 @@ def md(path):
 
 size = float(input())                                      
                                                                                 
-for name in glob.glob('assets/**/*.png', recursive=True):                             
+for name in glob.glob('assets/**/*.png', recursive=True):
     if size < 1.0:
         img = Image.open(name)
         height = int(img.height*size)
@@ -19,7 +20,7 @@ for name in glob.glob('assets/**/*.png', recursive=True):
             height = 1
         if width < 1:
             width = 1
-        resize = img.resize((width, height), Image.LANCZOS)
+        resize = img.resize((width, height), Image.NEAREST)
         out = "out\\" + str(size) + "\\" + name
         pathlist = out.split('\\')
         del pathlist[-1]
@@ -42,3 +43,15 @@ for name in glob.glob('assets/**/*.png', recursive=True):
         md(mdpath)
         resize.save(out)
         print("resize Numpy->" + str(size) + "x" + str(size) + " : " + name)
+        
+# mcmeta
+for name in glob.glob('assets/**/*.mcmeta', recursive=True):
+    out = "out\\" + str(size) + "\\" + name
+    pathlist = out.split('\\')
+    del pathlist[-1]
+    mdpath = ""
+    for st in pathlist:
+        mdpath = mdpath + st + "\\"
+    md(mdpath) 
+    ut.copyfile(name, out)
+    print("mcmeta copy->" + str(out))
