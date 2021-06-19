@@ -20,7 +20,8 @@ for name in glob.glob('assets/**/*.png', recursive=True):
             height = 1
         if width < 1:
             width = 1
-        resize = img.resize((width, height), Image.NEAREST)
+        resize = img.resize((width, height), Image.LANCZOS)
+        # resize = img.resize((width, height), Image.NEAREST)
         out = "out\\" + str(size) + "\\" + name
         pathlist = out.split('\\')
         del pathlist[-1]
